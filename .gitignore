@@ -1,0 +1,5 @@
+node_modules/
+src/client/public/js/bundle.js
+src/client/public/api/
+src/client/public/images/project/
+Documents/
