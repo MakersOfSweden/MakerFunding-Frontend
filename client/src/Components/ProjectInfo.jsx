@@ -38,7 +38,7 @@ module.exports = withRouter(React.createClass({
 					<div className="uk-width-2-3@m">
 						<div className="uk-card uk-card-default uk-card-body">
 							<ul data-uk-tab>
-								<li onClick={this.changePage.bind(this, "info")}><a href="#" ><span data-uk-icon="icon: heart"></span> Information</a></li>
+								<li onClick={this.changePage.bind(this, "info")}><a href="#" ><span data-uk-icon="icon: heart"></span> Om projektet</a></li>
 								<li onClick={this.changePage.bind(this, "about")}><a href="#"><span data-uk-icon="icon: info"></span> Om Stockholm Makerspace</a></li>
 							</ul>
 
@@ -47,22 +47,20 @@ module.exports = withRouter(React.createClass({
 					</div>
 					<div className="uk-width-1-3@m">
 						<div className="uk-card uk-card-default uk-card-body">
-							<div className="uk-child-width-expand@s" data-uk-grid>
-								<div className="uk-width-2-3@m">
-									<h3><Currency value={this.state.model.funding_status} currency={this.state.model.currency} /></h3>
+							<div className="uk-clearfix">
+								<div className="uk-float-left">
+									<h3 className="uk-margin-remove-bottom"><Currency value={this.state.model.funding_status} currency={this.state.model.currency} /></h3>
 								</div>
-								<div className="uk-width-1-3@m">
-									<div className="uk-align-right">
-										<h3>{percent}%</h3>
-									</div>
+								<div className="uk-float-right">
+									<h3 className="uk-margin-remove-bottom">{percent}%</h3>
 								</div>
 							</div>
-							<progress className="uk-progress uk-margin-remove-top" value={bar} max="100"></progress>
+							<progress className="uk-progress uk-margin-small-top uk-margin-remove-bottom" value={bar} max="100"></progress>
 
-							<p>av målet <Currency value={this.state.model.funding_goal} currency={this.state.model.currency} /></p>
+							<p className="uk-margin-small-top">av målet <Currency value={this.state.model.funding_goal} currency={this.state.model.currency} /></p>
 
-							<h3>{this.state.model.num_contributors} personer</h3>
-							<p>har bidragit till projektet</p>
+							<h3 className="uk-margin-remove-bottom">{this.state.model.num_contributors} personer</h3>
+							<p className="uk-margin-small-top">har bidragit till projektet</p>
 							<Link to={"/projekt/" + this.props.params.project_id + "/bidra"} className="uk-button uk-button-primary uk-button-large"><span data-uk-icon="icon: heart" /> Bidra till projektet</Link>
 						</div>
 					</div>

@@ -1,0 +1,3 @@
+CONTAINER_NAME=makerfunding-server
+CONTAINER_TAG=makerfunding/server
+CONTAINER_VERSION=1.0

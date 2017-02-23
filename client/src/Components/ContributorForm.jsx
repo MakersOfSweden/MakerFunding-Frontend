@@ -150,14 +150,14 @@ module.exports = withRouter(React.createClass({
 					</div>
 
 					<div className="uk-margin">
-						<div className="uk-form-label"></div>
+						<div className="uk-form-label">Nyhetsbrev</div>
 						<div className="uk-form-controls">
 							<label><input className="uk-checkbox" type="checkbox" name="newsletter" checked={this.state.model.newsletter} onChange={this.onChange} /> Jag vill ha nyhetsbrev från Stockholm Makerspace</label><br />
 						</div>
 					</div>
 
 					<div className="uk-margin">
-						<div className="uk-form-label"></div>
+						<div className="uk-form-label">Användarvillkor</div>
 						<div className="uk-form-controls">
 							<label><input className="uk-checkbox" type="checkbox" name="accepted" checked={this.state.model.accepted} onChange={this.onChange} /> Jag godkänner <Link to="/villkor" target="_blank">användarvillkoren</Link> för MakerFunding.se</label><br />
 						</div>
