@@ -120,7 +120,7 @@ class Project extends Controller
 			"message" => "Not implemented",
 		], 501);
 	}
-a
+
 	/**
 	 * Delete an project
 	 */

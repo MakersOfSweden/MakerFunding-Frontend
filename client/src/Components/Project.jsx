@@ -33,9 +33,8 @@ module.exports = React.createClass({
 			<div>
 				<h1 className="uk-heading-primary">{this.state.model.title}</h1>
 
-				<div className="uk-cover-container uk-light">
-					<canvas width="1000" height="564"></canvas>
-					<img src={this.state.model.image} alt="Projektbild" data-uk-cover />
+				<div className="coverImage">
+					<img src={this.state.model.image} alt="Projektbild" />
 				</div>
 			</div>
 		);

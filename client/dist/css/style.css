@@ -21,3 +21,7 @@
 #logoContainer {
 	background-color: steelblue;
 }
+
+.coverImage img {
+	width: 100%;
+}
