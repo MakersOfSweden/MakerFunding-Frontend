@@ -20,6 +20,13 @@ module.exports = withRouter(React.createClass({
 		});
 	},
 
+	onChangeTerms: function(event)
+	{
+		this.setState({
+			accepted: event.target.checked
+		});
+	},
+
 	onChange: function(event)
 	{
 		var s = {};
@@ -177,7 +184,7 @@ module.exports = withRouter(React.createClass({
 					<div className="uk-margin">
 						<div className="uk-form-label">Användarvillkor</div>
 						<div className="uk-form-controls">
-							<label><input className="uk-checkbox" type="checkbox" name="accepted" checked={this.state.accepted} onChange={this.onChange} /> Jag godkänner <Link to="/villkor" target="_blank">användarvillkoren</Link> för MakerFunding.se</label><br />
+							<label><input className="uk-checkbox" type="checkbox" name="accepted" checked={this.state.accepted} onChange={this.onChangeTerms} /> Jag godkänner <Link to="/villkor" target="_blank">användarvillkoren</Link> för MakerFunding.se</label><br />
 						</div>
 					</div>
 
@@ -187,7 +194,7 @@ module.exports = withRouter(React.createClass({
 						</div>
 
 						<div className="uk-float-right">
-							<button className="uk-button  uk-button-primary" disabled={!this.state.accepted} onClick={this.submit}>Gå vidare till betalning <span data-uk-icon="icon: arrow-right" /></button>
+							<button className="uk-button uk-button-primary" disabled={!this.state.accepted} onClick={this.submit}>Gå vidare till betalning <span data-uk-icon="icon: arrow-right" /></button>
 						</div>
 					</div>
 
