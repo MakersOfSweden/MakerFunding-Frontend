@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router'
+import CurrencyInput from 'react-currency-input';
 
 module.exports = withRouter(React.createClass({
 	mixins: [Backbone.React.Component.mixin],
@@ -8,12 +9,21 @@ module.exports = withRouter(React.createClass({
 	{
 		return {
 			page: "form",
+			accepted: true,
 		};
+	},
+
+	onChangeAmount: function(maskedValue, value)
+	{
+		this.getModel().set({
+			amount: value
+		});
 	},
 
 	onChange: function(event)
 	{
 		var s = {};
+
 		if(event.target.type == "checkbox")
 		{
 			s[event.target.name] = event.target.checked;
@@ -33,11 +43,11 @@ module.exports = withRouter(React.createClass({
 		// Prevent the form from being submitted
 		event.preventDefault();
 
-		if(this.state.model.payment == "card")
+		if(this.state.model.payment_type == "card")
 		{
 			var handler = StripeCheckout.configure({
-				key: "pk_test_QJ9xGhhVpFAA8ZFI0Pf1YbS2", // TODO
-				image: "https://stripe.com/img/documentation/checkout/marketplace.png", // TODO
+				key: config.stripeKey,
+				image: config.stripeImage,
 				locale: "auto",
 				token: function(token)
 				{
@@ -46,12 +56,13 @@ module.exports = withRouter(React.createClass({
 			});
 
 			// Open Checkout with further options:
+			console.log(this.state.model.amount);
 			handler.open({
 				name: "Crowdfunding",
 				description: this.state.model.project_title,
 				email: this.state.model.email,
 				currency: "SEK",
-				amount: 200 // TODO
+				amount: this.state.model.amount * 100,
 			});
 		}
 		else
@@ -65,19 +76,26 @@ module.exports = withRouter(React.createClass({
 		// Save Stripe token, if any
 		if(stripe_token !== undefined)
 		{
-			this.getModel().set({stripe_token});
+			this.getModel().set({payment_data: stripe_token});
 		}
 
 		// Send the data to our server
-		this.getModel().save();
-
-		// TODO: Error handling
-
-		// Go to thank you page
 		var _this = this;
-		setTimeout(function() {
-			_this.props.router.push("/projekt/" + _this.props.params.project_id + "/tack");
-		}, 0);
+		this.getModel().save(null, {
+			error: function()
+			{
+				alert("Något gick fel när betalningen skulle bekräftas. Vanligen kontrollera ditt kontoutdrag och kontakta info@makerspace.se");
+			},
+			success: function()
+			{
+				// Go to thank you page
+				setTimeout(function() {
+					_this.props.router.push("/projekt/" + _this.props.params.project_id + "/tack");
+				}, 0);
+
+			},
+		});
+
 	},
 
 	confirmSwish: function()
@@ -101,28 +119,28 @@ module.exports = withRouter(React.createClass({
 					<div className="uk-margin">
 						<label className="uk-form-label" htmlFor="form-stacked-text">Ditt namn:</label>
 						<div className="uk-form-controls">
-							<input className="uk-input" id="form-stacked-text" type="text" name="name" placeholder="Anders Andersson" onChange={this.onChange} value={this.state.model.name} />
+							<input className="uk-input" type="text" name="name" placeholder="Anders Andersson" onChange={this.onChange} value={this.state.model.name} />
 						</div>
 					</div>
 
 					<div className="uk-margin">
 						<label className="uk-form-label" htmlFor="form-stacked-text">Medlemsnummer:</label>
 						<div className="uk-form-controls">
-							<input className="uk-input" id="form-stacked-text" type="text" name="membernumber" placeholder="1234" onChange={this.onChange} value={this.state.model.membernumber}  />
+							<input className="uk-input" type="text" name="membernumber" placeholder="1234" onChange={this.onChange} value={this.state.model.membernumber}  />
 						</div>
 					</div>
 
 					<div className="uk-margin">
 						<label className="uk-form-label" htmlFor="form-stacked-text">Belopp:</label>
 						<div className="uk-form-controls">
-							<input className="uk-input" id="form-stacked-text" type="text" name="amount" placeholder="500" onChange={this.onChange} value={this.state.model.amount} />
+							<CurrencyInput ref="amount" className="uk-input" name="amount" onChange={this.onChangeAmount} value={this.state.model.amount} decimalSeparator="," thousandSeparator=" " precision="0" suffix=" SEK" />
 						</div>
 					</div>
 
 					<div className="uk-margin">
 						<label className="uk-form-label" htmlFor="form-stacked-text">E-postadress:</label>
 						<div className="uk-form-controls">
-							<input className="uk-input" id="form-stacked-text" type="text" name="email" placeholder="anders@example.com" onChange={this.onChange} value={this.state.model.email}  />
+							<input className="uk-input" type="text" name="email" placeholder="anders@example.com" onChange={this.onChange} value={this.state.model.email}  />
 						</div>
 					</div>
 
@@ -136,8 +154,8 @@ module.exports = withRouter(React.createClass({
 					<div className="uk-margin">
 						<div className="uk-form-label">Betalningssätt</div>
 						<div className="uk-form-controls">
-							<label><input className="uk-radio" type="radio" name="payment" value="card"  checked={this.state.model.payment == "card"}  onChange={this.onChange} /> Kortbetalning</label><br />
-							<label><input className="uk-radio" type="radio" name="payment" value="swish" checked={this.state.model.payment == "swish"} onChange={this.onChange} /> Swish</label>
+							<label><input className="uk-radio" type="radio" name="payment_type" value="card"  checked={this.state.model.payment_type == "card"}  onChange={this.onChange} /> Kortbetalning</label><br />
+							<label><input className="uk-radio" type="radio" name="payment_type" value="swish" checked={this.state.model.payment_type == "swish"} onChange={this.onChange} /> Swish</label>
 						</div>
 					</div>
 
@@ -159,17 +177,17 @@ module.exports = withRouter(React.createClass({
 					<div className="uk-margin">
 						<div className="uk-form-label">Användarvillkor</div>
 						<div className="uk-form-controls">
-							<label><input className="uk-checkbox" type="checkbox" name="accepted" checked={this.state.model.accepted} onChange={this.onChange} /> Jag godkänner <Link to="/villkor" target="_blank">användarvillkoren</Link> för MakerFunding.se</label><br />
+							<label><input className="uk-checkbox" type="checkbox" name="accepted" checked={this.state.accepted} onChange={this.onChange} /> Jag godkänner <Link to="/villkor" target="_blank">användarvillkoren</Link> för MakerFunding.se</label><br />
 						</div>
 					</div>
 
 					<div className="uk-clearfix">
 						<div className="uk-float-left">
-							<Link to={"/projekt/" + this.props.params.project_id} className="uk-button uk-button-danger" disabled={!this.state.model.accepted}><span data-uk-icon="icon: arrow-left" /> Avbryt</Link>
+							<Link to={"/projekt/" + this.props.params.project_id} className="uk-button uk-button-danger" disabled={!this.state.accepted}><span data-uk-icon="icon: arrow-left" /> Avbryt</Link>
 						</div>
 
 						<div className="uk-float-right">
-							<button className="uk-button  uk-button-primary" disabled={!this.state.model.accepted} onClick={this.submit}>Gå vidare till betalning <span data-uk-icon="icon: arrow-right" /></button>
+							<button className="uk-button  uk-button-primary" disabled={!this.state.accepted} onClick={this.submit}>Gå vidare till betalning <span data-uk-icon="icon: arrow-right" /></button>
 						</div>
 					</div>
 

@@ -23,7 +23,9 @@ module.exports = class Dashboard extends React.Component
 	{
 		return (
 			<div>
-				<h1>MakerFunding.se</h1>
+				<div id="logoContainer">
+					<img src="/images/logo.png" alt="MakerFunding.se logo" />
+				</div>
 
 				<p>Välkommen till MakerFunding.se. Det här är en sida av makers för makers. Sidan drivs av ideellt av Stockholm Makerspace.</p>
 

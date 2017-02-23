@@ -11,9 +11,10 @@ module.exports = class Contribute extends React.Component
 		super(props);
 
 		var m = new ContributorModel;
+		console.log(this.props.model);
 		m.set({
-			project_id: 1337, // TODO: Hardcoded
-			project_title: "MEEP MEEP", // TODO: Hardcoded
+			project_id: this.props.model.get("project_id"),
+			project_title: this.props.model.get("title"),
 		});
 
 		this.state = {

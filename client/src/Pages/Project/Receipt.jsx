@@ -1,7 +1,7 @@
 import React from 'react';
 import Receipt from '../../Components/Receipt'
 
-module.exports = class Receipt extends React.Component
+module.exports = class ReceiptPage extends React.Component
 {
 	render()
 	{

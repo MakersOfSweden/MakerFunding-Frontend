@@ -22,7 +22,7 @@ module.exports = withRouter(React.createClass({
 	{
 		if(this.state.page == "info")
 		{
-			var content = {__html: this.state.model.info };
+			var content = {__html: this.state.model.description };
 		}
 		else if(this.state.page == "about")
 		{

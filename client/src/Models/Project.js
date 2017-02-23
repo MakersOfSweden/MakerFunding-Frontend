@@ -3,7 +3,7 @@ import Backbone from 'backbone'
 module.exports = Backbone.Model.extend(
 {
 	idAttribute: "project_id",
-	urlRoot: "/api/project",
+	urlRoot: config.apiBasePath + "/project",
 	defaults: {
 			project_id: null,
 			active: true,

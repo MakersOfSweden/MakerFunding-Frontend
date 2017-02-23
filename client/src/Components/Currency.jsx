@@ -12,7 +12,7 @@ module.exports = React.createClass({
 			maximumFractionDigits: 0,
 		});
 
-		var value = formatter.format(this.props.value / 100);
+		var value = formatter.format(this.props.value);
 		return (<span>{value} {this.props.currency}</span>);
 	},
 });

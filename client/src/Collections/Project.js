@@ -4,5 +4,5 @@ import ProjectModel from '../Models/Project'
 module.exports = Backbone.Collection.extend(
 {
 	model: ProjectModel,
-	url: "/api/projects",
+	url: config.apiBasePath + "/project",
 });
