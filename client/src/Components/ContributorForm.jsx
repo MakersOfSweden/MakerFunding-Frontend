@@ -9,7 +9,7 @@ module.exports = withRouter(React.createClass({
 	{
 		return {
 			page: "form",
-			accepted: true,
+			accepted: false,
 		};
 	},
 
