@@ -124,16 +124,9 @@ module.exports = withRouter(React.createClass({
 			return (
 				<form className="uk-form-horizontal uk-margin-top uk-margin-bottom">
 					<div className="uk-margin">
-						<label className="uk-form-label" htmlFor="form-stacked-text">Ditt namn:</label>
+						<label className="uk-form-label" htmlFor="form-stacked-text">Namn / företag:</label>
 						<div className="uk-form-controls">
 							<input className="uk-input" type="text" name="name" placeholder="Anders Andersson" onChange={this.onChange} value={this.state.model.name} />
-						</div>
-					</div>
-
-					<div className="uk-margin">
-						<label className="uk-form-label" htmlFor="form-stacked-text">Medlemsnummer:</label>
-						<div className="uk-form-controls">
-							<input className="uk-input" type="text" name="membernumber" placeholder="1234" onChange={this.onChange} value={this.state.model.membernumber}  />
 						</div>
 					</div>
 
