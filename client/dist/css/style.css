@@ -19,7 +19,8 @@
 }
 
 #logoContainer {
-	background-color: steelblue;
+	background-color: grey;
+	padding: 20px;
 }
 
 .coverImage img {
