@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router'
 import CurrencyInput from 'react-currency-input';
+import Currency from './Currency';
 
 module.exports = withRouter(React.createClass({
 	mixins: [Backbone.React.Component.mixin],
@@ -10,6 +11,10 @@ module.exports = withRouter(React.createClass({
 		return {
 			page: "form",
 			accepted: false,
+			submitEnabled: false,
+			error_name: false,
+			error_amount: false,
+			error_email: false,
 		};
 	},
 
@@ -18,6 +23,8 @@ module.exports = withRouter(React.createClass({
 		this.getModel().set({
 			amount: value
 		});
+
+		this.recalcSubmit();
 	},
 
 	onChangeTerms: function(event)
@@ -25,6 +32,8 @@ module.exports = withRouter(React.createClass({
 		this.setState({
 			accepted: event.target.checked
 		});
+
+		this.recalcSubmit();
 	},
 
 	onChange: function(event)
@@ -41,6 +50,79 @@ module.exports = withRouter(React.createClass({
 		}
 
 		this.getModel().set(s);
+
+		this.recalcSubmit();
+	},
+
+	validate: function(name)
+	{
+		console.log("Validate: " + name);
+
+		if(name == "name" && this.state.model.name.length < 5)
+		{
+			this.setState({error_name: true});
+		}
+
+		if(name == "email" && this.state.model.email.length < 5)
+		{
+			this.setState({error_email: true});
+		}
+
+		if(name == "amount" && this.state.model.amount <= 0 || this.state.model.amount.length == 0)
+		{
+			this.setState({error_amount: true});
+		}
+
+		this.recalcSubmit();
+	},
+
+	onBlur: function(event)
+	{
+		console.log("Blur: " + event.target.name);
+		this.validate(event.target.name);
+	},
+
+	recalcSubmit: function()
+	{
+		var _this = this;
+		setTimeout(function()
+		{
+			var submitEnabled = true;
+
+			if(_this.state.accepted !== true)
+			{
+				submitEnabled = false;
+			}
+
+			if(_this.state.model.email.length < 5)
+			{
+				submitEnabled = false;
+			}
+			else
+			{
+				_this.setState({error_email: false});
+			}
+
+			if(_this.state.model.name.length < 5)
+			{
+				submitEnabled = false;
+			}
+			else
+			{
+				_this.setState({error_name: false});
+			}
+
+			if(_this.state.model.amount <= 0 || _this.state.model.amount.length == 0)
+			{
+				submitEnabled = false;
+			}
+			else
+			{
+				_this.setState({error_amount: false});
+			}
+
+			_this.setState({submitEnabled});
+		});
 	},
 
 	submit: function(event)
@@ -63,7 +145,6 @@ module.exports = withRouter(React.createClass({
 			});
 
 			// Open Checkout with further options:
-			console.log(this.state.model.amount);
 			handler.open({
 				name: "Crowdfunding",
 				description: this.state.model.project_title,
@@ -97,6 +178,7 @@ module.exports = withRouter(React.createClass({
 			{
 				// Go to thank you page
 				setTimeout(function() {
+					_this.props.router.push("/");
 					_this.props.router.push("/projekt/" + _this.props.params.project_id + "/tack");
 				}, 0);
 
@@ -126,21 +208,21 @@ module.exports = withRouter(React.createClass({
 					<div className="uk-margin">
 						<label className="uk-form-label" htmlFor="form-stacked-text">Namn / företag *</label>
 						<div className="uk-form-controls">
-							<input className="uk-input" type="text" name="name" placeholder="Anders Andersson" onChange={this.onChange} value={this.state.model.name} />
+							<input className={this.state.error_name ? "uk-input uk-form-danger" : "uk-input"} type="text" name="name" placeholder="Anders Andersson" onChange={this.onChange} onBlur={this.onBlur} value={this.state.model.name} />
 						</div>
 					</div>
 
 					<div className="uk-margin">
 						<label className="uk-form-label" htmlFor="form-stacked-text">Belopp *</label>
 						<div className="uk-form-controls">
-							<CurrencyInput ref="amount" className="uk-input" name="amount" onChange={this.onChangeAmount} value={this.state.model.amount} decimalSeparator="," thousandSeparator=" " precision="0" suffix=" SEK" />
+							<CurrencyInput ref="amount" className={this.state.error_amount ? "uk-input uk-form-danger" : "uk-input"} name="amount" onChange={this.onChangeAmount} onBlur={this.onBlur} value={this.state.model.amount} decimalSeparator="," thousandSeparator=" " precision="0" suffix=" SEK" />
 						</div>
 					</div>
 
 					<div className="uk-margin">
 						<label className="uk-form-label" htmlFor="form-stacked-text">E-postadress *</label>
 						<div className="uk-form-controls">
-							<input className="uk-input" type="text" name="email" placeholder="anders@example.com" onChange={this.onChange} value={this.state.model.email}  />
+							<input className={this.state.error_email ? "uk-input uk-form-danger" : "uk-input"} type="text" name="email" placeholder="anders@example.com" onChange={this.onChange} onBlur={this.onBlur} value={this.state.model.email}  />
 						</div>
 					</div>
 
@@ -177,7 +259,7 @@ module.exports = withRouter(React.createClass({
 					<div className="uk-margin">
 						<div className="uk-form-label">Användarvillkor</div>
 						<div className="uk-form-controls">
-							<label><input className="uk-checkbox" type="checkbox" name="accepted" checked={this.state.accepted} onChange={this.onChangeTerms} /> Jag godkänner <Link to="/villkor" target="_blank">användarvillkoren</Link> för MakerFunding.se</label><br />
+							<label><input className="uk-checkbox" type="checkbox" name="accepted" checked={this.state.accepted} onChange={this.onChangeTerms} /> Jag godkänner <Link to="/villkor" target="_blank">användarvillkoren</Link> för MakerFunding.se och är införstådd med att jag skänker pengar till föreningen Stockholm Makerspace,  org. Nr 802467-7026.</label><br />
 						</div>
 					</div>
 
@@ -187,7 +269,7 @@ module.exports = withRouter(React.createClass({
 						</div>
 
 						<div className="uk-float-right">
-							<button className="uk-button uk-button-primary" disabled={!this.state.accepted} onClick={this.submit}>Gå vidare till betalning <span data-uk-icon="icon: arrow-right" /></button>
+							<button className="uk-button uk-button-primary" disabled={!this.state.submitEnabled} onClick={this.submit}>Gå vidare till betalning <span data-uk-icon="icon: arrow-right" /></button>
 						</div>
 					</div>
 
@@ -198,16 +280,28 @@ module.exports = withRouter(React.createClass({
 		{
 			return (
 				<div className="uk-margin-top uk-margin-bottom">
-					<h2>Betala med Swish</h2>
-					<p>Ta fram din Swish-apparat och släng äver en röding till Theeo!</p>
-
-					<div>
-						<div className="uk-float-left">
-							<button onClick={this.cancel} className="uk-button uk-button-danger"><span data-uk-icon="icon: arrow-left" /> Avbryt</button>
+					<div className="" data-uk-grid>
+						<div className="uk-text-center uk-width-auto@m">
+							<img src="/images/swish.png" alt="Swish logotyp" />
 						</div>
 
-						<div className="uk-float-right uk-margin-bottom">
-							<button onClick={this.confirmSwish} className="uk-button uk-button-primary">Bekräfta betalning <span data-uk-icon="icon: arrow-right" /></button>
+						<div className="uk-width-expand@m">
+							<h2>Betala med Swish</h2>
+
+							<p>Ta fram din enhet med Swish-appen installerad och betala <Currency value={this.state.model.amount} currency="SEK" /> till telefonnummer <a href="tel:+46705661884">070 566 18 84</a></p>
+							<p>Swish-numret tillhör Stockholm Makerspaces ordförande Erik Cederberg.</p>
+
+							<p>Tryck på ”bekräfta betalning” nedan när betalningen har gått igenom.</p>
+
+							<div className="uk-width-auto@m">
+								<div className="uk-float-left">
+									<button onClick={this.cancel} className="uk-button uk-button-danger"><span data-uk-icon="icon: arrow-left" /> Avbryt</button>
+								</div>
+
+								<div className="uk-float-right uk-margin-bottom">
+									<button onClick={this.confirmSwish} className="uk-button uk-button-primary">Bekräfta betalning <span data-uk-icon="icon: arrow-right" /></button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

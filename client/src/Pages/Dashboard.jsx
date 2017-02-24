@@ -23,9 +23,6 @@ module.exports = class Dashboard extends React.Component
 	{
 		return (
 			<div>
-				<h2>Välkommen till MakerFunding.se</h2>
-				<p>Det här är en sida av makers för makers. Sidan drivs av ideellt av Stockholm Makerspace.</p>
-
 				<Projects collection={this.state.collection} />
 			</div>
 		);

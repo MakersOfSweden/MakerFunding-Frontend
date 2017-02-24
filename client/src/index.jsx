@@ -22,9 +22,9 @@ class App extends React.Component
 						<div className="uk-navbar-left">
 							<a href="/" className="uk-navbar-item uk-logo"><img src="/images/logo.png" alt="MakerFunding.se logo" style={{maxWidth: "250px"}} /></a>
 							<ul className="uk-navbar-nav">
-								<li className="uk-active"><Link to="/">Projekt</Link></li>
-								<li><Link to="/villkor">Användarvillkor</Link></li>
-								<li><Link to="/om-makerfunding">Om MakerFunding.se</Link></li>
+								<li className="uk-active"><Link to="/"><span data-uk-icon="icon: nut"></span>&nbsp;&nbsp;Projekt</Link></li>
+								<li><Link to="/villkor"><span data-uk-icon="icon: copy"></span>&nbsp;&nbsp;Användarvillkor</Link></li>
+								<li><Link to="/om-makerfunding"><span data-uk-icon="icon: info"></span>&nbsp;&nbsp;Om MakerFunding.se</Link></li>
 							</ul>
 						</div>
 					</div>

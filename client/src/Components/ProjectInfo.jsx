@@ -38,8 +38,8 @@ module.exports = withRouter(React.createClass({
 					<div className="uk-width-2-3@m">
 						<div className="uk-card uk-card-default uk-card-body">
 							<ul data-uk-tab>
-								<li onClick={this.changePage.bind(this, "info")}><a href="#" ><span data-uk-icon="icon: heart"></span> Om projektet</a></li>
-								<li onClick={this.changePage.bind(this, "about")}><a href="#"><span data-uk-icon="icon: info"></span> Om Stockholm Makerspace</a></li>
+								<li onClick={this.changePage.bind(this, "info")}><a href="#" ><span data-uk-icon="icon: nut"></span>&nbsp;&nbsp;Om projektet</a></li>
+								<li onClick={this.changePage.bind(this, "about")}><a href="#"><span data-uk-icon="icon: info"></span>&nbsp;&nbsp;Om Stockholm Makerspace</a></li>
 							</ul>
 
 							<div dangerouslySetInnerHTML={content} />
@@ -62,9 +62,9 @@ module.exports = withRouter(React.createClass({
 							<h3 className="uk-margin-remove-bottom">{this.state.model.num_contributors} personer</h3>
 							<p className="uk-margin-small-top">har bidragit till projektet</p>
 
-							<Link to={"/projekt/" + this.props.params.project_id + "/bidra"} className="uk-button uk-button-primary uk-button-large"><span data-uk-icon="icon: heart" /> Bidra till projektet</Link>
+							<Link to={"/projekt/" + this.props.params.project_id + "/bidra"} className="uk-button uk-button-primary uk-button-medium"><span data-uk-icon="icon: heart" />&nbsp;&nbsp;Bidra till projektet</Link>
 
-							<p>Betalningarna i denna kampanj dras direkt från ditt konto. Om målet ej uppnås kommer pengarna användas till att köpa in bästa möjliga utrustning.</p>
+							<p className="uk-text-small">Betalningarna i denna kampanj dras direkt. Om målet ej uppnås kommer pengarna användas till att köpa in bästa möjliga utrustning.</p>
 						</div>
 					</div>
 				</div>
