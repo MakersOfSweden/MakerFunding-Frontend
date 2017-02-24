@@ -140,10 +140,25 @@ class Project extends Controller
 	{
 		// Process the payment with Stripe
 		$verified = 0;
-		if($request->get("payment_type") == "stripe")
+		if($request->get("payment_type") == "card")
 		{
-			// TODO: Skicka API-request till Stripe
-			if(true)
+			// Set your secret key: remember to change this to your live secret key in production
+			// See your keys here: https://dashboard.stripe.com/account/apikeys
+			\Stripe\Stripe::setApiKey(config("stripe.secretApiKey"));
+
+			// Token is created using Stripe.js or Checkout!
+			// Get the payment token submitted by the form:
+			$token = $request->get("payment_data")["id"];
+
+			// Charge the user's card:
+			$charge = \Stripe\Charge::create(array(
+				"amount" => $request->get("amount") * 100,
+				"currency" => "sek",
+				"description" => "Stockholm Makerspace",
+				"source" => $token,
+			));
+
+			if($charge)
 			{
 				$verified = 1;
 			}

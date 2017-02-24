@@ -27,6 +27,9 @@ $app->withFacades();
 
 //$app->withEloquent();
 
+// Load configuration file
+$app->configure("stripe");
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings

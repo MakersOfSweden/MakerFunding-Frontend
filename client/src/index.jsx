@@ -17,17 +17,18 @@ class App extends React.Component
 	{
 		return (
 			<div>
-				<div>
-					<nav className="uk-navbar-container" data-uk-navbar>
+				<nav className="uk-navbar-container uk-margin" data-uk-navbar>
+					<div className="uk-background-secondary uk-light" style={{width: "100%"}}>
 						<div className="uk-navbar-left">
+							<a href="/" className="uk-navbar-item uk-logo"><img src="/images/logo.png" alt="MakerFunding.se logo" style={{maxWidth: "250px"}} /></a>
 							<ul className="uk-navbar-nav">
 								<li className="uk-active"><Link to="/">Projekt</Link></li>
 								<li><Link to="/villkor">Användarvillkor</Link></li>
 								<li><Link to="/om-makerfunding">Om MakerFunding.se</Link></li>
 							</ul>
 						</div>
-					</nav>
-				</div>
+					</div>
+				</nav>
 
 				<div className="uk-container uk-margin-top uk-margin-bottom">
 					{this.props.children}
@@ -36,7 +37,7 @@ class App extends React.Component
 				<div>
 					<footer className="uk-padding-remove-horizontal">
 						<div className="uk-dark uk-background-secondary uk-padding">
-							<p className="uk-margin-remove-bottom">MakerFunding.se är en crowdfundingsida som drivs ideellt av Stockholm Makerspace. Copyright &copy; 2017 Christian Antila och Stockholm Makerspace</p>
+							<p className="uk-margin-remove-bottom">MakerFunding.se är en crowdfundingsida som drivs ideellt av Stockholm Makerspace. Copyright &copy; 2017 Stockholm Makerspace</p>
 						</div>
 					</footer>
 				</div>

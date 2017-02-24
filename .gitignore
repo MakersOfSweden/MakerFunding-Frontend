@@ -2,3 +2,4 @@ node_modules/
 client/dist/images/project/
 client/dist/js/config.js
 Documents/
+server/dist/config/stripe.php

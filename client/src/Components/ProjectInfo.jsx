@@ -61,7 +61,10 @@ module.exports = withRouter(React.createClass({
 
 							<h3 className="uk-margin-remove-bottom">{this.state.model.num_contributors} personer</h3>
 							<p className="uk-margin-small-top">har bidragit till projektet</p>
+
 							<Link to={"/projekt/" + this.props.params.project_id + "/bidra"} className="uk-button uk-button-primary uk-button-large"><span data-uk-icon="icon: heart" /> Bidra till projektet</Link>
+
+							<p>Betalningarna i denna kampanj dras direkt från ditt konto. Om målet ej uppnås kommer pengarna användas till att köpa in bästa möjliga utrustning.</p>
 						</div>
 					</div>
 				</div>

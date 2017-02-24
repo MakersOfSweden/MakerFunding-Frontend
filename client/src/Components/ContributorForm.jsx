@@ -124,28 +124,28 @@ module.exports = withRouter(React.createClass({
 			return (
 				<form className="uk-form-horizontal uk-margin-top uk-margin-bottom">
 					<div className="uk-margin">
-						<label className="uk-form-label" htmlFor="form-stacked-text">Namn / företag:</label>
+						<label className="uk-form-label" htmlFor="form-stacked-text">Namn / företag *</label>
 						<div className="uk-form-controls">
 							<input className="uk-input" type="text" name="name" placeholder="Anders Andersson" onChange={this.onChange} value={this.state.model.name} />
 						</div>
 					</div>
 
 					<div className="uk-margin">
-						<label className="uk-form-label" htmlFor="form-stacked-text">Belopp:</label>
+						<label className="uk-form-label" htmlFor="form-stacked-text">Belopp *</label>
 						<div className="uk-form-controls">
 							<CurrencyInput ref="amount" className="uk-input" name="amount" onChange={this.onChangeAmount} value={this.state.model.amount} decimalSeparator="," thousandSeparator=" " precision="0" suffix=" SEK" />
 						</div>
 					</div>
 
 					<div className="uk-margin">
-						<label className="uk-form-label" htmlFor="form-stacked-text">E-postadress:</label>
+						<label className="uk-form-label" htmlFor="form-stacked-text">E-postadress *</label>
 						<div className="uk-form-controls">
 							<input className="uk-input" type="text" name="email" placeholder="anders@example.com" onChange={this.onChange} value={this.state.model.email}  />
 						</div>
 					</div>
 
 					<div className="uk-margin">
-						<label className="uk-form-label" htmlFor="form-stacked-text">Meddelande:</label>
+						<label className="uk-form-label" htmlFor="form-stacked-text">Meddelande</label>
 						<div className="uk-form-controls">
 							<textarea className="uk-textarea" rows="5" name="message" placeholder="Meddelande" onChange={this.onChange} value={this.state.model.message}  ></textarea>
 						</div>
