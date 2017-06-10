@@ -26,7 +26,7 @@ class Project extends Controller
 		// Load data from database
 		$data = DB::table("project")
 			->select(
-				"project.active",
+				"project.status",
 				"project.image",
 				"project.title",
 				"project.description",
@@ -77,7 +77,7 @@ class Project extends Controller
 		// Load data from database
 		$data = DB::table("project")
 			->select(
-				"project.active",
+				"project.status",
 				"project.image",
 				"project.title",
 				"project.description",

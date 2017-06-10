@@ -14,8 +14,15 @@ module.exports = React.createClass({
 
 		return (
 			<div key={row.project_id} className="projectBrief">
+				{row.status == "funded" ?
+					<div className="funded_wrapper">
+						<img src="/images/funded.png" className="funded" />
+					</div>
+				: ""}
 				<div className="test-height uk-cover-container uk-light">
-					<Link to={"/projekt/" + row.project_id}><img src={row.image} alt="Projektbild" /></Link>
+					<Link to={"/projekt/" + row.project_id}>
+						<img src={row.image} alt="Projektbild" />
+					</Link>
 				</div>
 				<div className="uk-card uk-card-default uk-card-body">
 					<Link to={"/projekt/" + row.project_id}><h4 className="uk-margin-remove">{row.title}</h4></Link>
