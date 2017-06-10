@@ -34,6 +34,11 @@ module.exports = React.createClass({
 				<h1 className="uk-heading-primary">{this.state.model.title}</h1>
 
 				<div className="coverImage">
+					{this.state.model.status == "funded" ?
+						<div className="funded_wrapper">
+							<img src="/images/funded.png" className="funded" />
+						</div>
+					: ""}
 					<img src={this.state.model.image} alt="Projektbild" />
 				</div>
 			</div>

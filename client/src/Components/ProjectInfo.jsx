@@ -62,9 +62,15 @@ module.exports = withRouter(React.createClass({
 							<h3 className="uk-margin-remove-bottom">{this.state.model.num_contributors} personer</h3>
 							<p className="uk-margin-small-top">har bidragit till projektet</p>
 
-							<Link to={"/projekt/" + this.props.params.project_id + "/bidra"} className="uk-button uk-button-primary uk-button-medium"><span data-uk-icon="icon: heart" />&nbsp;&nbsp;Bidra till projektet</Link>
+							{this.state.model.status == "active" ?
+								<div>
+									<Link to={"/projekt/" + this.props.params.project_id + "/bidra"} className="uk-button uk-button-primary uk-button-medium"><span data-uk-icon="icon: heart" />&nbsp;&nbsp;Bidra till projektet</Link>
+									<p className="uk-text-small">Betalningarna i denna kampanj dras direkt. Om målet ej uppnås kommer pengarna användas till att köpa in bästa möjliga utrustning.</p>
+								</div>
+							:
+								<span className="status">Projektet är avslutat</span>
+							}
 
-							<p className="uk-text-small">Betalningarna i denna kampanj dras direkt. Om målet ej uppnås kommer pengarna användas till att köpa in bästa möjliga utrustning.</p>
 						</div>
 					</div>
 				</div>
