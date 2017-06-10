@@ -6,7 +6,6 @@ chown -R www-data:www-data /var/www/html/bootstrap/cache/
 
 shutdown() {
         echo Shutting down service
-        /usr/bin/php /var/www/html/artisan service:unregister
         kill -QUIT `cat /var/run/hhvm/pid`
         echo Killed HHVM
         exit 0
@@ -14,9 +13,6 @@ shutdown() {
 
 # Unregister the service when the script is shut down
 trap shutdown SIGHUP SIGINT SIGTERM
-
-# Register the service immediately
-/usr/bin/php /var/www/html/artisan service:register
 
 # Start HHVM as a background process
 echo "Starting HHVM"
